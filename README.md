@@ -49,7 +49,7 @@ say ②xx③
 ```
 
 
-### `$_++`
+### Topic variable increment
 ```perl6
 say $_++
 ```
@@ -101,6 +101,9 @@ say 42 if 0|1
 
 Note that you can use junctions as sub args, and you get a junction
 back.
+
+
+## 1-character if-then
 
 ```perl6
 42==42&&say ‘hello’;
