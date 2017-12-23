@@ -117,3 +117,9 @@ back.
 ## Base 0x10FFFF
 
 This techique is explained in more detail in [this post](https://perl6advent.wordpress.com/2017/12/23/day-23-the-wonders-of-perl6-golf/).
+
+## infix .
+```perl6
+say (^50).max;
+say ^50 .max;
+```
