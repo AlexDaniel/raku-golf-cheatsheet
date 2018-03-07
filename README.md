@@ -136,7 +136,7 @@ put <a b c d>.any;
 
 ## Conditionals
 
-Use junctions if possible
+### Use junctions if possible
 
 ```perl6
 say 42 if 0||1
@@ -149,13 +149,15 @@ Note that you can use junctions as sub args, and you get a junction
 back.
 
 
-## 1-character if-then
+### 1-character if-then
 
 ```perl6
 42==42&&say ‘hello’;
 42==42>say ‘hello’;
 42==42≠say ‘hello’;
 ```
+
+**Note:** this also applies to operations with sets (i.e. ``1 ∈ … ∈ .say``).
 
 
 # Other
