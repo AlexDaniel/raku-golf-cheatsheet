@@ -106,6 +106,14 @@ This will produce warnings (Useless use of … in sink context), but it's OK if 
 1,{.say;$_~0}…10000;
 ```
 
+### Using »
+
+Note that » is supposed to run stuff in parallel, so the order of execution is not guaranteed. In normal code you should not do ``<a b c>».say`` even though current Rakudo does the processing sequentially. But in code golf that's a nice trick:
+
+```perl6
+.say for <a b c>;
+<a b c>».say;
+```
 
 ## Conditionals
 
