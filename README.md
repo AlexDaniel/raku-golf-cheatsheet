@@ -115,6 +115,14 @@ Note that » is supposed to run stuff in parallel, so the order of execution is 
 <a b c>».say;
 ```
 
+### Autothreading
+Sometimes `Junctions` cause subs to be called multiple times. This can be used to avoid for loops:
+
+```perl6
+put <a b c d>.any;
+.put for <a b c d>;
+```
+
 ## Conditionals
 
 Use junctions if possible
