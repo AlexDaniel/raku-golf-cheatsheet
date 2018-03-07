@@ -90,10 +90,17 @@ Y”;
 
 ## Lists
 
+The « » word quoting operator can be used to create lists without separating items with commas:
 ```perl6
 my ($a, $b, $c) = 42, 52, 62;
 my$z=«25$a$b$c»
 #    (25,$a,$b,$c)
+```
+
+Unquoted and quoted strings can be mixed:
+```perl6
+my$z=«a' 'b»
+#    ("a", " ", "b")
 ```
 
 
