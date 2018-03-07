@@ -69,11 +69,22 @@ say .¹
 
 ## Strings
 
+### Uninames
+
 Use uninames, error messages and other built-in strings instead of
 string literals:
 ```perl6
 say (‘♔’…‘♙’)».uniname».words»[2]
 #   KING QUEEN ROOK BISHOP KNIGHT PAWN
+```
+
+### Newlines
+
+The shortest way to write a newline is by using an actual newline in the source code:
+```perl6
+say “X\nY”;
+say “X
+Y”;
 ```
 
 
