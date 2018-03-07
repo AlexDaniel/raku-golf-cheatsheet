@@ -58,6 +58,15 @@ say .++
 ```
 
 
+### Topic variable numification
+```perl6
+say +$_
+```
+```perl6
+say .¹
+```
+
+
 ## Strings
 
 Use uninames, error messages and other built-in strings instead of
