@@ -40,12 +40,16 @@ say 兆
 ```
 
 
-### Whitespace between numbers and ops
+## Unicode numeric literals to avoid unneeded whitespace
 ```perl6
 say 2 xx 3
-```
-```perl6
 say ②xx③
+
+say 2,4 Z+7,8;
+say 2,④Z+7,8;
+
+say $_/2 for ^10;
+say $_/②for ^10;
 ```
 
 
@@ -208,10 +212,4 @@ This techique is explained in more detail in [this post](https://perl6advent.wor
 ```perl6
 say (^50).max;
 say ^50 .max;
-```
-
-## Unicode numeric literals to avoid unneeded whitespace
-```perl6
-say 2,4 Z+7,8;
-say 2,④Z+7,8;
 ```
