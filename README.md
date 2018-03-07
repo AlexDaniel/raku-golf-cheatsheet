@@ -111,7 +111,7 @@ my$z=«a' 'b»
 ## Loops
 
 
-### `xx`
+### Using `xx`
 This one is a bit tough to get into your code, but it does help
 sometimes:
 
@@ -141,8 +141,8 @@ Note that » is supposed to run stuff in parallel, so the order of execution is 
 Sometimes `Junctions` cause subs to be called multiple times. This can be used to avoid for loops:
 
 ```perl6
-put <a b c d>.any;
 .put for <a b c d>;
+put <a b c d>.any;
 ```
 
 ## Conditionals
