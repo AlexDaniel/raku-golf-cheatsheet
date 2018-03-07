@@ -169,3 +169,9 @@ This techique is explained in more detail in [this post](https://perl6advent.wor
 say (^50).max;
 say ^50 .max;
 ```
+
+## Unicode numeric literals to avoid unneeded whitespace
+```perl6
+say 2,4 Z+7,8;
+say 2,④Z+7,8;
+```
