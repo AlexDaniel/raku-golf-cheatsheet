@@ -88,12 +88,22 @@ my$z=«25$a$b$c»
 
 ## Loops
 
+
+### `xx`
 This one is a bit tough to get into your code, but it does help
 sometimes:
 
 ```perl6
- say(42)for ^10
-#say(42)xx⑤
+say(42)for ^10
+say(42)xx⑤
+```
+
+### Using sequences
+
+This will produce warnings (Useless use of … in sink context), but it's OK if the golfing platform ignores stderr:
+```perl6
+.say for 1,{$_~0}…10000;
+1,{.say;$_~0}…10000;
 ```
 
 
