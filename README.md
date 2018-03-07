@@ -167,6 +167,37 @@ back.
 **Note:** this also applies to operations with sets (i.e. ``1 ∈ … ∈ .say``).
 
 
+## Variables
+
+
+### Pre-defined variables
+
+`$/` and `$!` are pre-defined variables that don't have to be declared with `my`. They're normally used for regex matches and exceptions but can receive arbitrary values. This is useful to save intermediate values for reuse:
+```perl6
+say ($!=2*$_), ' ', 2*$! for ^10;
+```
+
+They can also be used for helper functions:
+```perl6
+say ($/={$_*100})(2), ' ', $/(3);
+```
+
+
+### Anonymous state variable
+
+```perl6
+say ($++, ++$, $-=5, $×=2, $+^=1) for ^5;
+# (0 1  -5  2 1)
+# (1 2 -10  4 0)
+# (2 3 -15  8 1)
+# (3 4 -20 16 0)
+# (4 5 -25 32 1)
+
+# Factorial
+say $×=++$ for ^10;
+```
+
+
 # Other
 
 ## Base 0x10FFFF
