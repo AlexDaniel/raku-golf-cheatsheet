@@ -40,7 +40,7 @@ say 兆
 ```
 
 
-## Unicode numeric literals to avoid unneeded whitespace
+### Unicode numeric literals to avoid unneeded whitespace
 ```perl6
 say 2 xx 3
 say ②xx③
@@ -202,13 +202,13 @@ say $×=++$ for ^10;
 ```
 
 
-# Other
+## Other
 
-## Base 0x10FFFF
+### Base 0x10FFFF
 
 This techique is explained in more detail in [this post](https://perl6advent.wordpress.com/2017/12/23/day-23-the-wonders-of-perl6-golf/).
 
-## infix .
+### infix .
 ```perl6
 say (^50).max;
 say ^50 .max;
