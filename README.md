@@ -204,9 +204,31 @@ say $×=++$ for ^10;
 
 ## Other
 
-### Base 0x10FFFF
+### Base 0x110000
 
-This techique is explained in more detail in [this post](https://perl6advent.wordpress.com/2017/12/23/day-23-the-wonders-of-perl6-golf/).
+If the golf platform counts Unicode code points instead of bytes, you can
+store large numbers in Unicode strings, yielding about 20 bits or 6 decimal
+digits per code point. There are 0x110000 (decimal 1114112) code points in
+total and you can encode a number into a base 0x110000 string like this:
+
+```perl6
+my $n = :10('1234567890' x 10);
+say $n.polymod(1114112 xx *).reverse.chrs;
+# Û𜭇󙐧񹂈𚷄򔁖𮸑𬩗򪮒򁻝򞩱􍵮񻗷𫀍𯇆􀰡
+```
+
+Then the string can be decoded with an overhead of 17 characters:
+
+```perl6
+say :1114112['Û𜭇󙐧񹂈𚷄򔁖𮸑𬩗򪮒򁻝򞩱􍵮񻗷𫀍𯇆􀰡󠫒'.ords];
+# 12345678901234567890...
+```
+
+If the resulting string contains invalid code points like surrogates or causes
+problems because of NFC normalization, simply try a different base.
+You can even use bases larger than 0x110000 if all "digits" happen to stay
+below 0x110000. But you often get the same result or even save a character
+with a 6-digit base like 999999.
 
 ### infix .
 ```perl6
