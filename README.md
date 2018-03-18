@@ -98,7 +98,7 @@ The « » word quoting operator can be used to create lists without separating i
 ```perl6
 my ($a, $b, $c) = 42, 52, 62;
 my$z=«25$a$b$c»
-#    (25,$a,$b,$c)
+#    (25 42 52 62)
 ```
 
 Unquoted and quoted strings can be mixed:
