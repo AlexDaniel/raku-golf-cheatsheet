@@ -1,12 +1,12 @@
 # 6lang/Perl 6 Golfing Cheatsheet
 
-As I'm getting bored with code golf, I decided to share some of the
+This repo is a place to share some of the golfing
 tricks with the world. If that document makes golfing less fun for
-you, you can close your eyes while reading it.
+you, please feel free to close your eyes while reading it.
 
 **Please note:** This document is mostly focused on golf platforms that
-count codepoints instead of UTF-8 bytes. That said, I will try to
-include unicode-unrelated tricks too.
+count codepoints instead of UTF-8 bytes. That said, unicode-unrelated
+tricks are welcome too.
 
 **Also:** This document does not list *everything* and probably it
   never will. Contributions are welcome.
