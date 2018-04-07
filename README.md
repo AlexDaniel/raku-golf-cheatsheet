@@ -235,3 +235,21 @@ with a 6-digit base like 999999.
 say (^50).max;
 say ^50 .max;
 ```
+
+### postfix .& with blocks
+
+The `.&{}` operator is shorter than using the `with` keyword and doesn't
+require to set `$_` which can be inconvenient:
+
+```perl6
+say .uc~.lc with 'aPpLe';
+$_='aPpLe';say .uc~.lc;
+say 'aPpLe'.&{.uc~.lc};
+```
+
+Sometimes it's even possible to use `>>.&{}` to shorten a call to `map`:
+
+```perl6
+say map {.uc~.lc},<aPpLe oraNGe Banana>;
+say <aPpLe oraNGe Banana>>>.&{.uc~.lc};
+```
