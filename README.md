@@ -159,6 +159,19 @@ say 42 if 0|1
 Note that you can use junctions as sub args, and you get a junction
 back.
 
+Junctions can also be used to terminate sequences with side effects:
+
+```perl6
+.say for 1…⑽
+```
+```perl6
+1…*.say×*>⑽
+```
+```perl6
+1…{.say}&⑽
+```
+
+If the block evaluates to a falsey value, a `|` or `^` juncation can be used instead.
 
 ### 1-character if-then
 
