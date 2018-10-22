@@ -35,7 +35,7 @@ Then use the corresponding unicode character.
 say ㊿
 #   50
 
-say 兆
+say 𖭡
 #   1000000000000
 ```
 
