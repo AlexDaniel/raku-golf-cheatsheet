@@ -1,4 +1,4 @@
-# 6lang/Perl 6 Golfing Cheatsheet
+# Raku/Perl 6 Golfing Cheatsheet
 
 This repo is a place to share some of the golfing
 tricks with the world. If that document makes golfing less fun for
