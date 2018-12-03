@@ -83,7 +83,7 @@ Y”;
 
 ### Quote words (< > and « »)
 
-This allows you to create lists of strings/numbers without using quotes and numbers. The elements are separated by whitespace however, so they can't contain whitespace themselves.
+This allows you to create lists of strings/numbers without using quotes and commas. The elements are separated by whitespace however, so they can't contain whitespace themselves.
 
 ```perl6
 say <1 2 3>
