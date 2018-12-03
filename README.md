@@ -11,9 +11,9 @@ tricks are welcome too.
 **Also:** This document does not list *everything* and probably it
   never will. Contributions are welcome.
 
-## Numbers
+## Unicode
 
-### Unicode
+### Unicode numeric literals
 If one of the numbers that you are using is one of these:
 ```
 NaN -0.5 0.00625 0.025 0.0375 0.05 0.0625 0.083333 0.1 0.111111 0.125
@@ -30,7 +30,8 @@ NaN -0.5 0.00625 0.025 0.0375 0.05 0.0625 0.083333 0.1 0.111111 0.125
 # perl6 -e 'for ^0x10FFFF { .unival.say }' | sort -un
 ```
 
-Then use the corresponding unicode character.
+This can condense large numbers into single characters.
+
 ```perl6
 say ㊿
 #   50
@@ -39,8 +40,8 @@ say 𖭡
 #   1000000000000
 ```
 
+This can also be used to avoid excess whitespace before and after numbers:
 
-### Unicode numeric literals to avoid unneeded whitespace
 ```perl6
 say 2 xx 3
 say ②xx③
@@ -52,24 +53,11 @@ say $_/2 for ^10;
 say $_/②for ^10;
 ```
 
+Additionally there's also some numerical constants, like `π` (pi), `τ` (tau) and `𝑒` (Euler's constant).
 
-### Topic variable increment
-```perl6
-say $_++
-```
-```perl6
-say .++
-```
+### Unicode operators
 
-
-### Topic variable numification
-```perl6
-say +$_
-```
-```perl6
-say .¹
-```
-
+Some unicode characters double as operators, such as `²` (squared), `³` (cubed). A full list can be found at the [perl docs](https://docs.perl6.org/language/unicode_ascii). Some of the more useful ones are the set operators like `∅∈∉∪` etc, the sequence operator `…`, and the multiplication/division alternatives `×÷` to save whitespace.
 
 ## Strings
 
@@ -91,10 +79,18 @@ say “X
 Y”;
 ```
 
-
 ## Lists
 
-The « » word quoting operator can be used to create lists without separating items with commas:
+### Quote words (< > and « »)
+
+This allows you to create lists of strings/numbers without using quotes and commas. The elements are separated by whitespace however, so they can't contain whitespace themselves.
+
+```perl6
+say <1 2 3>
+say <apple orange bannana>
+```
+
+The « » word quoting operator can be used to interpolate variables:
 ```perl6
 my ($a, $b, $c) = 42, 52, 62;
 say «25$a$b$c»;
@@ -107,17 +103,36 @@ say «a' 'b»;
 say ("a"," ","b");
 ```
 
+Or `{ }` expressions:
+```perl6
+say «8{^9}0»;
+say (8,|^9,0);
+say «abc{"def"xx 9}ghi»;
+say ("abc",|("def"xx 9),"ghi");
+```
+
+### Creating 2D lists
+
+```perl6
+say [1,2,3;4,5,6;7,8,9]
+#   [(1 2 3) (4 5 6) (7 8 9)]
+```
+
+### Flattening 2D lists
+
+```perl6
+say [[1,2,3],[4,5,6]][*;*]   # Can remove whitespace afterwards
+say [[1,2,3],[4,5,6]].flat
+```
 
 ## Loops
 
-
 ### Using `xx`
-This one is a bit tough to get into your code, but it does help
-sometimes:
+This one is a bit tough to get into your code, but it does help sometimes:
 
 ```perl6
-say(42)for ^10
-say(42)xx⑤
+say($_)for ^5
+say($++)xx⑤
 ```
 
 ### Using sequences
@@ -135,6 +150,34 @@ Note that » is supposed to run stuff in parallel, so the order of execution is 
 ```perl6
 .say for <a b c>;
 <a b c>».say;
+```
+
+You can also chain `»`s for diminishing returns.
+
+```perl6
+.uc.say for <a b c>;
+<a b c>».uc».say;
+```
+
+If the function is more complicated, you can use `».&{}`:
+
+```perl6
+say +.comb for <aPpLe oraNGe Banana>;
+<aPpLe oraNGe Banana>».&{say +.comb};
+```
+
+Keep in mind that `»` loops over for *all* values of multi-dimensional arrays and returns with the same structure, which could be of benefit.
+
+```perl6
+say [[1,2,3],[4,5],8]».succ
+#   [[2 3 4] [5 6] 9]
+```
+
+This may depend on the nodality of the function, i.e. if the method takes a list.
+
+```perl6
+say [[1,2,3],[4,5],8]».elems
+#   [3 2 1]
 ```
 
 ### Autothreading
@@ -200,6 +243,19 @@ They can also be used for helper functions:
 say ($/={$_*100})(2), ' ', $/(3);
 ```
 
+Though if you are using the function more than a couple of times, then consider using a defined variable for one byte calls. This has a two byte overhead for `my`, but saves a byte for each call and an extra byte if it is at the end of a statement.
+```perl6
+$/={$_*100};say [$/(2),$/(3),$/(4)]
+# Vs
+my&f={$_*100};say [f(2),f(3),f 4]
+```
+
+If you're using `$/` to store a list, then you can use the special `$0,$1,$2 ...` variables to access specific elements without indexing.
+```perl6
+$/=(0,1,*+*...*);
+say "$0 $1 $5 $7 $10";
+#  0 1 5 13 55
+```
 
 ### Anonymous state variable
 
@@ -215,6 +271,65 @@ say ($++, ++$, $-=5, $×=2, $+^=1) for ^5;
 say $×=++$ for ^10;
 ```
 
+### Topic variable (`$_`)
+
+The `$_` variable is very useful. You can call a method on the `$_` variable without using the variable name, e.g. `.lc`. There are a few ways of doing this, the most useful of which is the `.&{}` operator. The smartmatch operator `~~` is shorter in some circumstances, but doesn't return the value.
+
+```perl6
+say .uc~.lc with 'aPpLe';
+$_='aPpLe';say .uc~.lc;
+say 'aPpLe'.&{.uc~.lc};
+'aPpLe'~~say .uc~.lc;
+```
+
+#### Topic variable increment
+```perl6
+say $_++
+```
+```perl6
+say .++
+```
+
+#### Topic variable numification
+```perl6
+say +$_
+```
+```perl6
+say .¹
+```
+
+#### Topic variable indexing
+
+```perl6
+say .[0]
+```
+
+## Hyper Operators (« and »)
+
+We've seen the `»` used for postfixes above, but there are some other uses for it and its counterpart `«`.
+
+### Applying prefixes
+
+```perl6
+say -«[[0,1,2],[3,4],5]
+#  [[0 -1 -2] [-3 -4] -5]
+say ^«[[0,1,2],[3,4],5]
+# [[^0 ^1 ^2] [^3 ^4] ^5]
+```
+
+### Zipping lists
+
+Ordinarily you would use the `Z` operator to zip lists, but using `«»` allows you to zip lists of different lengths, with the shorter list cycling.
+```perl6
+say <1 2 3 4 5> «~»<a b>
+#  (1a 2b 3a 4b 5a)
+```
+The direction of the hyper operators matter, with the arrows pointing at the shorter list in order to cycle:
+
+```perl6
+say <1 2 3 4 5> «~«<a b>;
+#  (1a 2b)
+```
 
 ## Other
 
@@ -234,7 +349,7 @@ say $n.polymod(1114112 xx *).reverse.chrs;
 Then the string can be decoded with an overhead of 17 characters:
 
 ```perl6
-say :1114112['Û𜭇󙐧񹂈𚷄򔁖𮸑𬩗򪮒򁻝򞩱􍵮񻗷𫀍𯇆􀰡󠫒'.ords];
+say :1114112['Û𜭇󙐧񹂈𚷄򔁖𮸑𬩗򪮒򁻝򞩱􍵮񻗷𫀍𯇆􀰡󠫒'.ords]  # 38 chars
 # 12345678901234567890...
 ```
 
@@ -244,26 +359,25 @@ You can even use bases larger than 0x110000 if all "digits" happen to stay
 below 0x110000. But you often get the same result or even save a character
 with a 6-digit base like 999999.
 
+### Joined code points
+
+Similarly you can join the code points instead for a similar compression ratio. Though the compression rate goes down with more zeroes in the number.
+
+```perl6
+my $n = '1234567890' x 10;
+say $n.comb(/\d ** 1..7 <!before 0> <?{$/ < 0x110000}>/).chrs;
+# 𞉀󀨔񔙎󜁲򊩒𞉀󀨔񔙎󜁲򊩒𞉀󀨔񔙎󜁲򊩒𞉀Ồ
+```
+
+For an overhead of only 12 bytes (-1 if you don't have to numify it).
+```perl6
+say +[~] "𞉀󀨔񔙎󜁲򊩒𞉀󀨔񔙎󜁲򊩒𞉀󀨔񔙎󜁲򊩒𞉀Ồ".ords     # 32 chars
+```
+
+This has the same problem with accents and surrogate code points as the other method.
+
 ### infix .
 ```perl6
 say (^50).max;
 say ^50 .max;
-```
-
-### postfix .& with blocks
-
-The `.&{}` operator is shorter than using the `with` keyword and doesn't
-require to set `$_` which can be inconvenient:
-
-```perl6
-say .uc~.lc with 'aPpLe';
-$_='aPpLe';say .uc~.lc;
-say 'aPpLe'.&{.uc~.lc};
-```
-
-Sometimes it's even possible to use `>>.&{}` to shorten a call to `map`:
-
-```perl6
-say map {.uc~.lc},<aPpLe oraNGe Banana>;
-say <aPpLe oraNGe Banana>>>.&{.uc~.lc};
 ```
